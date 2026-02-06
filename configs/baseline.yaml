@@ -1,0 +1,56 @@
+random_seed: 42
+
+data:
+  train_path: data/round1_ijcai_18_train_20180301.txt
+  sep: \s+
+  label_col: is_trade
+  timestamp_col: context_timestamp
+  id_col: instance_id
+  missing: -1
+
+split:
+  strategy: time
+  valid_ratio: 0.2
+
+features:
+  numeric:
+    - item_price_level
+    - item_sales_level
+    - item_collected_level
+    - item_pv_level
+    - user_age_level
+    - user_star_level
+    - user_pv_level
+
+  categorical:
+    - item_id
+    - item_brand_id
+    - item_city_id
+    - item_category_list
+    - item_property_list
+    - user_id
+    - user_gender_id
+    - user_city_id
+    - user_occupation_id
+    - context_page_id
+    - shop_id
+    - shop_review_num_level
+    - shop_star_level
+
+ 
+  time_features:
+    - hour
+    - dayofweek
+
+model:
+  name: logistic_regression
+  params:
+    max_iter: 1000
+    class_weight: balanced
+
+output:
+  artifacts_dir: artifacts/baseline
+  train_csv: artifacts/baseline/train.csv
+  valid_csv: artifacts/baseline/valid.csv
+  model_path: artifacts/baseline/model.joblib
+  metrics_path: artifacts/baseline/metrics_valid.json
